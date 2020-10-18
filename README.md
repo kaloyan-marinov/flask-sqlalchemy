@@ -19,6 +19,7 @@ commands:
 (venv) $ sqlite3 ex_1_one_to_many.db
 sqlite> .mode columns
 sqlite> .headers on
+sqlite> .tables
 sqlite> .schema
 ...
 ```
