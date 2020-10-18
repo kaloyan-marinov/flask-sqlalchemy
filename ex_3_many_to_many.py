@@ -1,10 +1,20 @@
+"""
+The main thing you need to know when creating a many-to-many relationship
+in a relational database is that you need an auxiliary table
+to associate the primary keys in one of the tables to primary keys in the other table.
+Such an auxiliary table is (fittingly!) called an "association table".
+
+example 1: TV channels that different users are subscribed to
+example 2: courses that different students are enrolled in
+"""
+
 import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-DB_FILE = "ex_2_many_to_many.db"
+DB_FILE = os.path.splitext(__file__)[0] + ".db"
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
@@ -13,12 +23,13 @@ db = SQLAlchemy(app)
 
 user_channel_association_table = db.Table(
     "user_channel_association_table",
-    db.Column("user_id", db.Integer, db.ForeignKey("user.id")),
-    db.Column("channel_id", db.Integer, db.ForeignKey("channel.id")),
+    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+    db.Column("channel_id", db.Integer, db.ForeignKey("channels.id")),
 )
 
 
 class User(db.Model):
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 
@@ -33,6 +44,7 @@ class User(db.Model):
 
 
 class Channel(db.Model):
+    __tablename__ = "channels"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 

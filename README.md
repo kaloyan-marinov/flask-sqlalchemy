@@ -22,9 +22,12 @@ sqlite> .headers on
 sqlite> .schema
 ...
 ```
+<<<<<<< HEAD
 
 # Resources
 
 1. https://www.youtube.com/watch?v=juPQ04_twtA
 2. https://www.youtube.com/watch?v=JI76IvF9Lwg
 3. https://www.youtube.com/watch?v=OvhoYbjtiKc
+=======
+>>>>>>> 7fdcc4f... add a __tablename__ attribute to each model

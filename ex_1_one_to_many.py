@@ -4,7 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 
-DB_FILE = "ex_1_one_to_many.db"
+DB_FILE = os.path.splitext(__file__)[0] + ".db"
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
@@ -12,6 +12,7 @@ db = SQLAlchemy(app)
 
 
 class Person(db.Model):
+    __tablename__ = "persons"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 
@@ -22,10 +23,11 @@ class Person(db.Model):
 
 
 class Pet(db.Model):
+    __tablename__ = "pets"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 
-    owner_id = db.Column(db.Integer, db.ForeignKey("person.id"))
+    owner_id = db.Column(db.Integer, db.ForeignKey("persons.id"))
 
     def __repr__(self):
         return f"<Pet (name={self.name}, owner_id={self.owner_id})>"
