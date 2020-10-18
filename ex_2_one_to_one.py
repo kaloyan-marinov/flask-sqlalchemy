@@ -25,7 +25,7 @@ class User(db.Model):
     # to make the following into a 1-to-1 relationship,
     # the only thing we have to do is add `uselist=False`
     # (you can think of `uselist` as a "list of children")
-    profile = db.relationship("Profile", backref="user", uselist=False)
+    profile = db.relationship("Profile", backref="owner", uselist=False)
 
 
 class Profile(db.Model):
@@ -50,11 +50,11 @@ if __name__ == "__main__":
     db.create_all()
 
     user = User(name="John Doe")
-    profile_v1 = Profile(name="John Doe's Profile v1", user=user)
+    profile_v1 = Profile(name="John Doe's Profile v1", owner=user)
     db.session.add(user)
     db.session.add(profile_v1)
     db.session.commit()
 
-    profile_v2 = Profile(name="John Doe's Profile v2", user=user)
+    profile_v2 = Profile(name="John Doe's Profile v2", owner=user)
     db.session.add(profile_v2)
     db.session.commit()
