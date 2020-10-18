@@ -4,7 +4,7 @@ in a relational database is that you need an auxiliary table
 to associate the primary keys in one of the tables to primary keys in the other table.
 Such an auxiliary table is (fittingly!) called an "association table".
 
-example 1: TV channels that different users are subscribed to
+example 1: TV channels that different customers are subscribed to
 example 2: courses that different students are enrolled in
 """
 
@@ -21,26 +21,26 @@ app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_FILE}"
 db = SQLAlchemy(app)
 
 
-user_channel_association_table = db.Table(
-    "user_channel_association_table",
-    db.Column("user_id", db.Integer, db.ForeignKey("users.id")),
+customer_channel_pairs = db.Table(
+    "customer_channel_pairs",
+    db.Column("customer_id", db.Integer, db.ForeignKey("customers.id")),
     db.Column("channel_id", db.Integer, db.ForeignKey("channels.id")),
 )
 
 
-class User(db.Model):
-    __tablename__ = "users"
+class Customer(db.Model):
+    __tablename__ = "customers"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 
     subscriptions = db.relationship(
         "Channel",
-        secondary="user_channel_association_table",
+        secondary="customer_channel_pairs",
         backref=db.backref("subscribers", lazy="dynamic"),
     )
 
     def __repr__(self):
-        return f"<User (name={self.name})>"
+        return f"<Customer (name={self.name})>"
 
 
 class Channel(db.Model):
@@ -60,14 +60,14 @@ if __name__ == "__main__":
 
     db.create_all()
 
-    user_1 = User(name="Adam")
-    user_2 = User(name="Bob")
-    user_3 = User(name="Charlie")
-    user_4 = User(name="David")
-    db.session.add(user_1)
-    db.session.add(user_2)
-    db.session.add(user_3)
-    db.session.add(user_4)
+    customer_1 = Customer(name="Adam")
+    customer_2 = Customer(name="Bob")
+    customer_3 = Customer(name="Charlie")
+    customer_4 = Customer(name="David")
+    db.session.add(customer_1)
+    db.session.add(customer_2)
+    db.session.add(customer_3)
+    db.session.add(customer_4)
     db.session.commit()
 
     channel_1 = Channel(name="Traversy Media")
@@ -76,11 +76,11 @@ if __name__ == "__main__":
     db.session.add(channel_2)
     db.session.commit()
 
-    channel_1.subscribers.append(user_1)
-    channel_1.subscribers.append(user_3)
-    channel_1.subscribers.append(user_4)
-    channel_2.subscribers.append(user_2)
-    channel_2.subscribers.append(user_4)
+    channel_1.subscribers.append(customer_1)
+    channel_1.subscribers.append(customer_3)
+    channel_1.subscribers.append(customer_4)
+    channel_2.subscribers.append(customer_2)
+    channel_2.subscribers.append(customer_4)
     db.session.commit()
 
     for c in [channel_1, channel_2]:
