@@ -27,7 +27,9 @@ class Pet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 
-    owner_id = db.Column(db.Integer, db.ForeignKey("persons.id"))
+    owner_id = db.Column(
+        db.Integer, db.ForeignKey("persons.id", ondelete="cascade"), nullable=False
+    )
 
     def __repr__(self):
         return f"<Pet (name={self.name}, owner_id={self.owner_id})>"
@@ -67,3 +69,8 @@ if __name__ == "__main__":
 
     print()
     print(f"The owner of {spot.name} is {spot.owner}")
+
+    print()
+    print(f"Deleting {anthony}")
+    db.session.delete(anthony)
+    db.session.commit()
