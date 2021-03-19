@@ -24,8 +24,14 @@ sqlite> .schema
 ...
 ```
 
-# Resources
+# Initial resources
 
-1. https://www.youtube.com/watch?v=juPQ04_twtA
-2. https://www.youtube.com/watch?v=JI76IvF9Lwg
-3. https://www.youtube.com/watch?v=OvhoYbjtiKc
+1. "Creating One-To-Many Relationships in Flask-SQLAlchemy" is a [video tutorial available on YouTube](https://www.youtube.com/watch?v=juPQ04_twtA)
+
+2. "One to One Relationships in Flask-SQLAlchemy" is a [video tutorial available on YouTube](https://www.youtube.com/watch?v=JI76IvF9Lwg)
+
+3. "Creating Many-To-Many Relationships in Flask-SQLAlchemy" is a [video tutorial available on YouTube](https://www.youtube.com/watch?v=OvhoYbjtiKc]
+
+# `2021/03/19/07_54/g-t-i-17/specify-an-ondelete-cascade-option-in-the-Person-db-model`
+
+There is a thread on Reddit that appears to build upon the video tutorials mentioned in the previous section. That thread is on https://www.reddit.com/r/flask/comments/fjwua7/flasksqlalchemy_ondeletecascade_not_working_in/

@@ -16,7 +16,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(32))
 
-    pets = db.relationship("Pet", backref="owner")
+    pets = db.relationship("Pet", backref="owner", cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return f"<Person (name={self.name})>"
@@ -71,6 +71,6 @@ if __name__ == "__main__":
     print(f"The owner of {spot.name} is {spot.owner}")
 
     print()
-    print(f"Deleting {anthony}")
+    print(f"Deleting {anthony}, which will also delete all of his/her pets")
     db.session.delete(anthony)
     db.session.commit()
